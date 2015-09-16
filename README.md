@@ -1,2 +1,2 @@
 # peerjs-demo
-A demo app to try out PeerJS
+A super simple chat app to demo [PeerJS](https://github.com/peers/peerjs/)
