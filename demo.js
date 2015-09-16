@@ -7,28 +7,36 @@
 	// Initialization - ready to receive connections
 	peer.on('open', function (id) {
 		console.log('My peer ID is: ' + id);
+
 		document.getElementById("mypeerid").innerHTML = id;
 	});
 
-	// Await connections from others
+	// Received connection from a peer
 	peer.on('connection', function (conn) {
 		console.log("Connected to by " + conn.peer);
 
-		conn.on('data', function (data) {
-			console.log("Received data from " + conn.peer + ": " + data);
-		});
+		setUpChatForConnection(conn);
 	})
 
+	// Connecting to a peer
 	document.getElementById("connectBtn").onclick = function () {
 		var requestedPeer = document.getElementById("peerIdInput").value;
-		var myconn = peer.connect(requestedPeer);
-		myconn.on('open', function () {
-			myconn.on('data', function (data) {
-				console.log("Received data from " + myconn.peer + ": " + data);
-			});
+
+		var conn = peer.connect(requestedPeer);
+
+		// Connection has been established
+		conn.on('open', function () {
+			setUpChatForConnection(conn);
 		});
 	};
 
+	function setUpChatForConnection(conn) {
+		conn.on('data', function (data) {
+			console.log("Received data from " + conn.peer + ": " + data);
+		});
+	}
+
+	// Sending data to connected peers
 	document.getElementById("chatBtn").onclick = function () {
 		var message = document.getElementById("chatmessage").value;
 
