@@ -1,22 +1,32 @@
 (function () {
-	var peer = new Peer({
-		key: 'lwjd5qra8257b9', //cwkTODO this is the demo api key
-		debug: 3
-	});
+	var peer;
 
-	// Initialization - ready to receive connections
-	peer.on('open', function (id) {
-		console.log('My peer ID is: ' + id);
+	initialize();
 
-		document.getElementById("mypeerid").innerHTML = id;
-	});
+	function initialize() {
+		setUpPeer();
+	}
 
-	// Received connection from a peer
-	peer.on('connection', function (conn) {
-		console.log("Connected to by " + conn.peer);
+	function setUpPeer() {
+		peer = new Peer({
+			key: 'lwjd5qra8257b9', //cwkTODO this is the demo api key
+			debug: 3
+		});
 
-		setUpChatForConnection(conn);
-	})
+		// Initialization - ready to receive connections
+		peer.on('open', function (id) {
+			console.log('My peer ID is: ' + id);
+
+			document.getElementById("mypeerid").innerHTML = id;
+		});
+
+		// Received connection from a peer
+		peer.on('connection', function (conn) {
+			console.log("Connected to by " + conn.peer);
+
+			setUpChatForConnection(conn);
+		});
+	}
 
 	// Connecting to a peer
 	document.getElementById("connectBtn").onclick = function () {
