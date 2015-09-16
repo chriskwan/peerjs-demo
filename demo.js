@@ -39,11 +39,15 @@
 	// Sending data to connected peers
 	document.getElementById("chatBtn").onclick = function () {
 		var message = document.getElementById("chatmessage").value;
+		sendMessageToPeers(message);
+	};
 
+	function sendMessageToPeers(message) {
 		for (var currentPeerId in peer.connections) {
 			if (!peer.connections.hasOwnProperty(currentPeerId)) {
 				return;
 			}
+			
 			var connectionsWithCurrentPeer = peer.connections[currentPeerId];
 
 			// It's possible to have multiple connections with the same peer,
@@ -52,6 +56,6 @@
 				connectionsWithCurrentPeer[i].send(message);
 			}
 		}
-	};
+	}
 
 })();
