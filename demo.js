@@ -36,12 +36,15 @@
 			connectToPeer(requestedPeer);
 		};
 
-		// Button to sending messages to connected peers
-		document.getElementById("chatBtn").onclick = function () {
-			var message = document.getElementById("chatmessage").value;
-			addMessageToChatArea(peer.id, message);
-			sendMessageToPeers(message);
-		};
+		// Sending messages to connected peers
+
+		document.getElementById("chatBtn").onclick = sendMessage;
+
+		document.getElementById("chatmessage").onkeydown = function (event){
+			if (event.keyCode === 13) { // Enter key
+				sendMessage();
+			}
+		}
 	}
 
 	function connectToPeer(peerId) {
@@ -51,6 +54,16 @@
 		conn.on('open', function () {
 			setUpChatForConnection(conn);
 		});
+	}
+
+	function sendMessage() {
+		var messageElement = document.getElementById("chatmessage");
+		
+		var message = messageElement.value;
+		addMessageToChatArea(peer.id, message);
+		sendMessageToPeers(message);
+
+		messageElement.value = "";
 	}
 
 	function setUpChatForConnection(conn) {
