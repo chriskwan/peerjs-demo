@@ -21,14 +21,17 @@
 	// Connecting to a peer
 	document.getElementById("connectBtn").onclick = function () {
 		var requestedPeer = document.getElementById("peerIdInput").value;
+		connectToPeer(requestedPeer);
+	};
 
-		var conn = peer.connect(requestedPeer);
+	function connectToPeer(peerId) {
+		var conn = peer.connect(peerId);
 
 		// Connection has been established
 		conn.on('open', function () {
 			setUpChatForConnection(conn);
 		});
-	};
+	}
 
 	function setUpChatForConnection(conn) {
 		conn.on('data', function (data) {
@@ -47,7 +50,7 @@
 			if (!peer.connections.hasOwnProperty(currentPeerId)) {
 				return;
 			}
-			
+
 			var connectionsWithCurrentPeer = peer.connections[currentPeerId];
 
 			// It's possible to have multiple connections with the same peer,
