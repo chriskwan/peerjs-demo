@@ -21,7 +21,7 @@
 			document.getElementById("mypeerid").innerHTML = id;
 		});
 
-		// Received connection from a peer
+		// Receiving a connection from a peer (i.e.: they hit the Connect button)
 		peer.on('connection', function (conn) {
 			console.log("Connected to by " + conn.peer);
 
@@ -47,6 +47,7 @@
 		}
 	}
 
+	// Sending a connection to a peer (i.e.: you hit the Connect button)
 	function connectToPeer(peerId) {
 		var conn = peer.connect(peerId);
 
