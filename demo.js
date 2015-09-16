@@ -39,6 +39,7 @@
 		// Button to sending messages to connected peers
 		document.getElementById("chatBtn").onclick = function () {
 			var message = document.getElementById("chatmessage").value;
+			addMessageToChatArea(peer.id, message);
 			sendMessageToPeers(message);
 		};
 	}
@@ -55,7 +56,17 @@
 	function setUpChatForConnection(conn) {
 		conn.on('data', function (data) {
 			console.log("Received data from " + conn.peer + ": " + data);
+			addMessageToChatArea(conn.peer, data);
 		});
+	}
+
+	function addMessageToChatArea(peerId, message) {
+		var chatMessage = peerId;
+		if (peerId == peer.id) {
+			chatMessage += " (You)";
+		}
+		chatMessage += ": " + message + "<br>";
+		document.getElementById("chatarea").innerHTML += chatMessage;
 	}
 
 	function sendMessageToPeers(message) {
