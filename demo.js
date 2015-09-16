@@ -5,6 +5,7 @@
 
 	function initialize() {
 		setUpPeer();
+		setUpUI();
 	}
 
 	function setUpPeer() {
@@ -28,11 +29,19 @@
 		});
 	}
 
-	// Connecting to a peer
-	document.getElementById("connectBtn").onclick = function () {
-		var requestedPeer = document.getElementById("peerIdInput").value;
-		connectToPeer(requestedPeer);
-	};
+	function setUpUI() {
+		// Button to connect to a peer
+		document.getElementById("connectBtn").onclick = function () {
+			var requestedPeer = document.getElementById("peerIdInput").value;
+			connectToPeer(requestedPeer);
+		};
+
+		// Button to sending messages to connected peers
+		document.getElementById("chatBtn").onclick = function () {
+			var message = document.getElementById("chatmessage").value;
+			sendMessageToPeers(message);
+		};
+	}
 
 	function connectToPeer(peerId) {
 		var conn = peer.connect(peerId);
@@ -48,12 +57,6 @@
 			console.log("Received data from " + conn.peer + ": " + data);
 		});
 	}
-
-	// Sending data to connected peers
-	document.getElementById("chatBtn").onclick = function () {
-		var message = document.getElementById("chatmessage").value;
-		sendMessageToPeers(message);
-	};
 
 	function sendMessageToPeers(message) {
 		for (var currentPeerId in peer.connections) {
