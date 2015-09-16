@@ -12,10 +12,10 @@
 
 	// Await connections from others
 	peer.on('connection', function (conn) {
-		console.log("Received a pretty cool connection from " + conn.peer);
+		console.log("Connected to by " + conn.peer);
 
 		conn.on('data', function (data) {
-			console.log("Receiveddddd", data);
+			console.log("Received data from " + conn.peer + ": " + data);
 		});
 	})
 
@@ -24,7 +24,7 @@
 		var myconn = peer.connect(requestedPeer);
 		myconn.on('open', function () {
 			myconn.on('data', function (data) {
-				console.log("received some sick data", data);
+				console.log("Received data from " + myconn.peer + ": " + data);
 			});
 		});
 	};
